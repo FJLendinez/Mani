@@ -27,7 +27,7 @@ Clona el repositorio donde consideres
 Usa:
 
 ```bash
-make build`
+make build
 ```
 
 O el siguiente comando:
@@ -88,4 +88,4 @@ Para crear usuarios y cuentas, añádelos a través del portal de administració
 
 Accede al portal de administración con tu navegador en la url:
 
-https://<nombre-de-dominio>/admin
+`https://<nombre-de-dominio>/admin`
