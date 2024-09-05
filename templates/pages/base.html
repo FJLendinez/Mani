@@ -1,0 +1,131 @@
+{% load static %}
+
+{% if not request.htmx %}
+    {% load webpush_notifications %}
+    <!DOCTYPE html>
+    <html data-theme="cupcake" lang="es">
+    <head>
+        <title>Mani</title>
+        <script src="{% static 'htmx.min.js' %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        {% webpush_header %}
+        <link rel="apple-touch-icon" sizes="128x128" href="{% static 'rsz_icon.png' %}">
+        <link rel="apple-touch-icon" sizes="240x240" href="{% static 'rsz_1icon.png' %}">
+        <link rel="shortcut icon" href="{% static 'rsz_1icon.png' %}">
+        <link rel="manifest" href="{% static 'manifest.json' %}">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {}
+        </script>
+
+
+        <meta name="htmx-config" content='{"historyCacheSize": 0, "refreshOnHistoryMiss": true}'>
+        <style>
+            .htmx-indicator {
+                display: none;
+            }
+
+            .htmx-request .htmx-indicator {
+                display: inline;
+            }
+
+            .htmx-request.htmx-indicator {
+                display: inline;
+            }
+
+            .htmx-request .htmx-remove-on-request {
+                display: none;
+            }
+
+            .htmx-request.htmx-remove-on-request {
+                display: none;
+            }
+
+            #installInstructions {
+                display: none
+            }
+
+            @media (display-mode: browser) {
+                #installInstructions {
+                    display: block
+                }
+            }
+        </style>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('{% static "service-worker.js" %}');
+            } else {
+                console.log("Service worker is not supported");
+            }
+        </script>
+    </head>
+    <body hx-boost="true" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {% webpush_button with_class="fixed z-50 bottom-10 right-8 bg-primary text-white w-16 h-16 rounded-full drop-shadow-lg flex justify-center items-center p-4 hover:drop-shadow-2xl" %}
+{% endif %}
+
+{% if request.user.is_authenticated %}
+    <div class="drawer">
+    <input id="my-drawer-3" type="checkbox" class="drawer-toggle"/>
+    <div class="drawer-content flex flex-col">
+    {% component 'header' request=request %}{% endcomponent %}
+{% endif %}
+{% component 'messages' %}{% endcomponent %}
+{#<button id="webpush-subscribe-button"#}
+{#        class="fixed z-50 bottom-10 right-8 bg-primary text-white w-16 h-16 rounded-full drop-shadow-lg flex justify-center items-center p-4 hover:drop-shadow-2xl"#}
+{#        data-url="{% url 'save_webpush_info' %}">#}
+{#    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="text-white">#}
+{#        <path stroke-linecap="round" stroke-linejoin="round"#}
+{#              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>#}
+{#    </svg>#}
+{#</button>#}
+
+{% block content %}
+{% endblock %}
+</div>
+{% if request.user.is_authenticated %}
+    {% component 'sidebar' request=request %}{% endcomponent %}
+{% endif %}
+</div>
+
+<!-- Main modal -->
+
+<div class="modal-content" id="modal-content">
+</div>
+
+{% if not request.htmx %}
+    <script>
+    let targetNode = document.getElementById('webpush-subscribe-button')
+
+    targetNode.addEventListener('click', () => console.log('clicked'))
+    // Options for the observer (which mutations to observe)
+    const config = {attributes: false, childList: true, subtree: true};
+
+    // Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+        for (const mutation of mutationList) {
+            if (mutation.type === "childList") {
+                if (targetNode.innerText.includes('Unsubscribe') || targetNode.innerText.includes('Successfully subscribed')  ) {
+                    targetNode.classList.add('hidden')
+                    document.getElementById('webpush-message').remove()
+                } else if (targetNode.innerText.includes('Subscribe')) {
+                    targetNode.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>`
+                }
+            } else if (mutation.type === "attributes") {
+                console.log(`The ${mutation.attributeName} attribute was modified.`);
+            }
+        }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+    targetNode.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>`
+
+
+</script>
+    </body>
+    </html>
+{% endif %}

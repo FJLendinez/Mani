@@ -1,0 +1,9 @@
+<dialog id="modal_dialog" class="modal">
+    <div class="modal-box">
+        {% slot "body" default %}{% endslot %}
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+<script>document.getElementById('modal_dialog').showModal()</script>

@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: mani_db
+    volumes:
+      - mani_db-data:/var/lib/postgresql/data
+    env_file:
+      - '../.env'
+  redis:
+    image: redis:latest
+    container_name: mani_redis
+    env_file:
+      - '../.env'
+
+volumes:
+  mani_db-data:

@@ -1,0 +1,5 @@
+from .environ import env
+
+
+CELERY_BROKER_URL=env.str('CELERY_BROKER_URL')
+CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_TASK_ALWAYS_EAGER', False)

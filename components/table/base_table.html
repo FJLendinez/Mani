@@ -1,0 +1,50 @@
+{% load customlib %}
+<div class="card">
+
+    <div class="card-body">
+        <div class="card-title">
+        {{ table_name }}
+    </div>
+        <div class="text-gray-400 text-sm flex justify-between items-center">
+            <div class="flex items-center">
+                <div>{{ page.start_index }} - {{ page.end_index }} de {{ page.paginator.count }}</div>
+            </div>
+            <div class="flex">
+                {% if page.has_previous %}
+                    <a href="?{% url_replace page=page.previous_page_number %}"
+                       class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"><</a>
+                {% else %}
+                    <a href="?{% url_replace %}"
+                       class="pointer-events-none flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-gray-200 border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"><</a>
+                {% endif %}
+                {% if page.has_next %}
+                    <a href="?{% url_replace page=page.next_page_number %}"
+                       class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">></a>
+                {% else %}
+                    <a href="?{% url_replace %}"
+                       class="pointer-events-none flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">></a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="table table-xs">
+                <thead>
+                <tr>
+                    {% for h in headings %}
+                        <th scope="col">{{ h }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                {% for d in data %}
+                    <tr>
+                        {% for f in d %}
+                            <td>{{ f }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

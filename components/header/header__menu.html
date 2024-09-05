@@ -1,0 +1,27 @@
+
+<li>
+    <a href="/transactions/">Movimientos</a>
+</li>
+<li>
+    <a href="{% url 'category_list' %}">Categorías</a>
+</li>
+<li>
+    <a href="{% url 'goal_list' %}">Objetivos</a>
+</li>
+<li>
+    <a href="{% url 'debt_list' %}">Deudas</a>
+</li>
+<div class="dropdown dropdown-end mr-2">
+    <div tabindex="0" role="button" class="btn btn-ghost rounded-btn"> {{ current_account.name }}
+        ({{ total_in_account|floatformat:2 }})
+    </div>
+    <ul
+            tabindex="0"
+            class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-52 p-2 shadow">
+        {% for acc in user_accounts %}
+            <li><a hx-get="{% url 'accounts:set_current_account_view' %}?accountid={{ acc.id }}">{{ acc.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% component 'date_range_setter' request=request %} {% endcomponent %}

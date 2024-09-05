@@ -1,0 +1,23 @@
+{
+    "name": "Mani",
+    "short_name": "Mani",
+    "start_url": "/",
+    "background_color": "#FFDCB5",
+    "theme_color": "#1E003D",
+    "icons": [
+        {
+            "src": "/static/rsz_1icon.png",
+            "sizes": "240x240",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/static/rsz_icon.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable any"
+        }
+    ],
+    "display": "standalone",
+    "orientation":"portrait"
+}

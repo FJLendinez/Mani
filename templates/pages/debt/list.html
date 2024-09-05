@@ -1,0 +1,21 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-8 mb-3 mb-sm-0">
+                            {% component 'base_table' request=request table_name='Dinero prestado' headings=lend_headings fields=lend_fields objects=lend_debts %}{% endcomponent %}
+                            {% component 'base_table' request=request table_name='Dinero pedido' headings=loan_headings fields=loan_fields objects=loan_debts %}{% endcomponent %}
+            </div>
+            <div class="col-md-4 mb-3 mb-sm-0 text-center">
+                <h3>Acciones</h3>
+                                <div>
+                    <button class="btn button" hx-get="{% url 'debt-form' %}" hx-target="#modal-content"
+                            data-bs-toggle="modal" data-bs-target="#default-modal">Añadir deuda
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

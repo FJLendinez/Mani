@@ -1,0 +1,40 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <div class="w-full py-2 bg-gray-100">
+        <div class="px-8 py-4 mx-auto shadow-md bg-white rounded-md mb-4">
+            <h2 class="text-2xl font-bold">Configuración</h2>
+
+            <form hx-post="." hx-target="#page">
+                <div class="grid grid-cols-2 gap-3 my-3">
+                    <div>
+                        {% include 'components/field.html' with field=user_update_form.first_name %}
+                    </div>
+                    <div>
+                        {% include 'components/field.html' with field=user_update_form.last_name %}
+                    </div>
+                </div>
+                {% include 'components/field.html' with field=user_update_form.email %}
+                <div class="w-full flex justify-end mt-3">
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2"
+                            type="submit">Actualizar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="px-8 py-4 mx-auto shadow-md bg-white rounded-md">
+            <h2 class="text-2xl font-bold">Cambiar contraseña</h2>
+
+            <form hx-post="{% url 'users:change_password' %}" hx-target="#page">
+                <div class="my-3">{% include 'components/field.html' with field=change_password_form.password %}</div>
+                <div class="my-3">{% include 'components/field.html' with field=change_password_form.repeat_password %}</div>
+                <div class="w-full flex justify-end mt-3">
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2"
+                            type="submit">Cambiar contraseña
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <div class="flex mt-3 justify-center items-center">
+        <div class="stats stats-vertical lg:stats-horizontal shadow bg-neutral-content text-primary-content">
+            <div class="stat">
+                <div class="stat-title">Ahorrado en este periodo</div>
+                <div class="stat-value text-3xl">{{ saved_on_period|floatformat:2|default:'No disp.' }} €</div>
+                <div class="stat-actions">
+                    <button class="btn btn-sm btn-primary" hx-get="{% url 'goal-form' %}" hx-target="#modal-content">
+                        Añadir objetivo
+                    </button>
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">Objetivo de ahorro</div>
+                <div class="stat-value text-2xl">{{ total_saved|floatformat:2|default:'No disp.' }} € de {{ total_required|floatformat:2|default:'No disp.' }} €</div>
+                <div class="stat-actions">
+                    <button class="btn btn-sm" hx-get="{% url 'deposit' %}" hx-target="#modal-content">Depósito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% component 'base_table' request=request table_name='Objetivos' headings=headings fields=fields objects=goals %}{% endcomponent %}
+    
+{% endblock %}

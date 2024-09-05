@@ -1,0 +1,25 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <div class="flex mt-3 justify-center items-center">
+        <div class="stats stats-vertical lg:stats-horizontal shadow bg-neutral-content text-primary-content">
+            <div class="stat">
+                <div class="stat-title">Total estimado</div>
+                <div class="stat-value text-3xl ">{{ total_estimated|floatformat:2|default:'No disp.' }} €</div>
+                <div class="stat-actions">
+                    <button class="btn btn-sm btn-primary" hx-get="{% url 'category-form' %}"
+                            hx-target="#modal-content">
+                        Añadir categoría
+                    </button>
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">Proporción gasto/estimación</div>
+                <div class="stat-value text-3xl ">{{ prop|floatformat:2|default:'No disp.' }} %</div>
+            </div>
+        </div>
+    </div>
+    {% component 'base_table' request=request table_name='Categorías' headings=headings fields=fields objects=categories %}{% endcomponent %}
+
+{% endblock %}

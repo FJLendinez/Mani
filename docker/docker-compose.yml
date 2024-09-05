@@ -1,0 +1,13 @@
+services:
+  mani_app:
+    image: mani:latest
+    container_name: mani_app
+    command:
+      - "app"
+    ports:
+      - "9637:9637"
+    env_file:
+      - '../.env'
+    volumes:
+      - ../:/code
+      - ../mani_data:/data/
