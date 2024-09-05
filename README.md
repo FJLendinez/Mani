@@ -57,7 +57,19 @@ Usa cualquier servicio de proxy inverso para conectarlo a la url que consideres
 
 ### Crea un superusuario
 
-Accediendo a la bash del contenedor, usa el siguiente comando y sigue las instrucciones:
+Necesitarás acceder por ssh al servidor:
+
+```bash
+ssh <user>@<server>
+```
+
+Después accede a la bash del contenedor:
+
+```bash
+make bash
+```
+
+Y una vez dentro del contenedor, usa el siguiente comando y sigue las instrucciones:
 
 ```bash
 python manage.py createsuperuser
@@ -72,5 +84,8 @@ para encontrar cómo hacerlo.
 
 ### Usuarios y cuentas
 
-Para crear usuarios y cuentas, añádelos a través del portal de administración como superusuario
+Para crear usuarios y cuentas, añádelos a través del portal de administración como superusuario.
 
+Accede al portal de administración con tu navegador en la url:
+
+https://<nombre-de-dominio>/admin
