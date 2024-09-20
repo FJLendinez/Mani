@@ -14,14 +14,16 @@ class DepositForm(forms.Form):
     account = forms.ModelChoiceField(queryset=Account.objects.none(), required=False,
                                      widget=forms.Select(attrs={'class': 'form-control hidden'}))
     goal = forms.ModelChoiceField(label='Objetivo', queryset=Goal.objects.all(),
-                                  widget=forms.Select(attrs={'class': 'form-control input input-sm input-bordered input-accent w-full'}))
+                                  widget=forms.Select(attrs={
+                                      'class': 'form-control input input-sm input-bordered input-accent w-full'}))
     amount = forms.DecimalField(label='Cantidad', max_digits=10, decimal_places=2,
-                                widget=forms.NumberInput(attrs={'class': 'form-control input input-sm input-bordered input-accent w-full'}))
+                                widget=forms.NumberInput(
+                                    attrs={'class': 'form-control input input-sm input-bordered input-accent w-full'}))
 
     def __init__(self, request, *args, **kwargs):
         super(DepositForm, self).__init__(*args, **kwargs)
         self.request = request
-        self.fields['account'].queryset = get_accounts(self.request)
+        self.fields['account'].queryset = get_accounts(self.request).filter(id=get_current_account(self.request).id)
         self.fields['goal'].queryset = Goal.objects.filter(account__in=self.fields['account'].queryset)
 
     def clean_account(self):

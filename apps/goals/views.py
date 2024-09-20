@@ -12,7 +12,7 @@ def goals(request):
     goals = get_goals(request)
     saved_on_period = deposit_on_period(request, goals)
     goals = add_total_expenses(goals)
-    total_saved = goals.aggregate(Sum('transactions__amount')).get('transactions__amount__sum') or 0
+    total_saved = goals.aggregate(Sum('total_expenses')).get('total_expenses__sum') or 0
     total_required = goals.aggregate(Sum('amount')).get('amount__sum') or 0
 
     return render(request, 'pages/goals/list.html', {'goals': goals,
