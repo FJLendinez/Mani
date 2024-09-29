@@ -73,11 +73,11 @@ class DateRangeSetterComponent(component.Component):
     template = """
     <div class="flex">
 <div class="join gap-0">
-  <a href="/components/set-date/?previous=true type="button" class="btn btn-xs	 join-item"><</a>
-  <a href="/components/set-date/?now=true" type="button" class="btn btn-xs	join-item hidden lg:flex">{% if range_from and range_to %}{{ range_from }} - {{ range_to }}{% endif %}</a>
-  <a href="/components/set-date/?now=true" type="button" class="btn btn-xs	join-item flex lg:hidden">{% if range_from and range_to %}{{ range_from.isoformat }} - {{ range_to.isoformat }}{% endif %}</a>
-  <a href="/components/set-date/?period={{ next_period }}" type="button" class="btn btn-xs	 join-item">{{ period }}</a>
-  <a href="/components/set-date/?next=true"type="button" class="btn btn-xs	 join-item">></a>
+  <a href="/components/set-date/?previous=true type="button" class="btn btn-xs bg-[#EECAD5] border-[#F1D3CE] join-item"><</a>
+  <a href="/components/set-date/?now=true" type="button" class="btn btn-xs bg-[#EECAD5] border-[#F1D3CE] join-item hidden lg:flex">{% if range_from and range_to %}{{ range_from }} - {{ range_to }}{% endif %}</a>
+  <a href="/components/set-date/?now=true" type="button" class="btn btn-xs bg-[#EECAD5] border-[#F1D3CE] join-item flex lg:hidden">{% if range_from and range_to %}{{ range_from.isoformat }} - {{ range_to.isoformat }}{% endif %}</a>
+  <a href="/components/set-date/?period={{ next_period }}" type="button" class="btn btn-xs bg-[#EECAD5] border-[#F1D3CE] join-item">{{ period }}</a>
+  <a href="/components/set-date/?next=true"type="button" class="btn btn-xs bg-[#EECAD5] border-[#F1D3CE] join-item">></a>
 </div>
 </div>
 """
