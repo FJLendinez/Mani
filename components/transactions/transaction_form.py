@@ -81,6 +81,20 @@ class TransactionUpdateFormComponent(HTMXObjectFormView, component.Component):
     form_class = TransactionForm
     success_url = '.'
     action_url = 'transaction-update-form'
+    template = """
+      {% component 'modal' %}
+     <h3> {{ modal_title }} </h1>
+     <form method="post" action="{% url action_url object.pk %}">
+            {% for field in form %}
+    {% if 'hidden' not in field.field.widget.attrs.class %}
+    <div class="mb-3">{{field.label}} {{ field }} </div>
+    {% endif %}
+    {% endfor %}
+         <button type="submit" class="btn btn-primary btn-block mt-4">{{ modal_button }}</button>
+         <button type="button" hx-get="{% url 'transaction-delete-form' object.pk %}" hx-target="#modal-content" class="btn btn-error btn-block mt-4">Eliminar</button>
+     </form>
+     {% endcomponent %}
+     """
 
     def get_queryset(self):
         current_account = get_current_account(self.request)

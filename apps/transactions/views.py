@@ -26,6 +26,12 @@ def transactions(request):
         current_transaction_history.filter(type=Transaction.TransactionType.EXPENSE, goal__isnull=True))
     total_deposit = to_value(
         current_transaction_history.filter(type=Transaction.TransactionType.EXPENSE, goal__isnull=False))
+    transactions = list(transactions)
+    total_real = total_income - total_expenses
+    calculated_last_amount = total_real
+    for t in transactions:
+        calculated_last_amount = calculated_last_amount + t.amount if t.type == Transaction.TransactionType.EXPENSE else calculated_last_amount - t.amount
+        t.last_amount = calculated_last_amount
     return render(request, 'pages/transactions/transactions_list.html', {'transactions': transactions,
                                                                          'headings': ['Concepto', 'Cantidad', 'Fecha',
                                                                                       'Categoría', 'Objetivo', 'Deuda',

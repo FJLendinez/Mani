@@ -214,7 +214,13 @@
             </div>
         </div>
     </div>
-    {% component 'base_table' request=request table_name='Movimientos' headings=headings fields=fields objects=transactions %}{% endcomponent %}
+    <div class="pt-5 pb-3 mx-5 font-bold text-xl">
+    Movimientos
+    </div>
+    {% for transaction in transactions %}
+        {% component 'transaction_row' transaction=transaction %}{% endcomponent %}
+    {% endfor %}
+{#    {% component 'base_table' request=request table_name='Movimientos' headings=headings fields=fields objects=transactions %}{% endcomponent %}#}
 
 
 {% endblock %}
