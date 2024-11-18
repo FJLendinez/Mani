@@ -1,0 +1,43 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+<div class="py-5 px-4 sm:px-6 lg:px-8">
+    <div class="mb-8">
+        <div class="flex justify-between items-start">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ category.name }}</h1>
+                <p class="mt-2 text-sm text-gray-500">{{ category.description }}</p>
+            </div>
+            <div class="flex gap-2">
+                <div hx-get="{% url 'category-update-form' category.id %}" hx-target="#modal-content" class="btn btn-primary mt-4">
+                    Editar
+                </div>
+                <div hx-get="{% url 'category-delete-form' category.id %}" hx-target="#modal-content" class="btn btn-error mt-4">
+                    Eliminar
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-sm font-medium text-gray-500">Gastado Actual</h3>
+                <p class="mt-1 text-2xl font-semibold text-gray-900">{{ category.total_expenses|floatformat:2 }} €</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-sm font-medium text-gray-500">Estimado</h3>
+                <p class="mt-1 text-2xl font-semibold text-gray-900">{{ category.estimated|floatformat:2 }} €</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Transacciones</h2>
+        {% for transaction in transactions.all %}
+        {% component 'transaction_row' transaction %}{% endcomponent %}
+    {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}

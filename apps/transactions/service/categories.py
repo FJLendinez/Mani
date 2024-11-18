@@ -22,3 +22,10 @@ def add_total_expenses(request, categories):
         total_expenses=Sum('transactions__amount', filter=Q(transactions__type=Transaction.TransactionType.EXPENSE,
                                                             transactions__date__gte=d_from,
                                                             transactions__date__lte=d_to)))
+
+
+def get_transactions_for_category(request, category):
+    d_from, d_to = get_current_date(request)
+    return Transaction.objects.filter(category=category,
+                                      date__gte=d_from,
+                                      date__lte=d_to)

@@ -20,6 +20,8 @@
             </div>
         </div>
     </div>
-    {% component 'base_table' request=request table_name='Categorías' headings=headings fields=fields objects=categories %}{% endcomponent %}
-
+    {#    {% component 'base_table' request=request table_name='Categorías' headings=headings fields=fields objects=categories %}{% endcomponent %}#}
+    {% for category in categories %}
+        {% component 'category_row' %}{% endcomponent %}
+    {% endfor %}
 {% endblock %}

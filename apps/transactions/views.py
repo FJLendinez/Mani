@@ -2,12 +2,12 @@ from datetime import date
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from apps.transactions.models import Transaction
-from apps.transactions.service.categories import get_categories, add_total_expenses
+from apps.transactions.service.categories import get_categories, add_total_expenses, get_transactions_for_category
 from apps.transactions.service.transactions import get_current_transactions, get_current_account_transactions
 
 
@@ -86,3 +86,12 @@ def categories(request):
                                                         'total_estimated': total_estimated,
                                                         'prop': prop,
                                                         })
+
+
+def category_detail(request, pk):
+    cats = get_categories(request)
+    cats = add_total_expenses(request, cats)
+    category = get_object_or_404(cats, pk=pk)
+    cat_transactions = get_transactions_for_category(request, category)
+    return render(request, 'pages/category/detail.html',
+                  {'category': category, 'transactions': cat_transactions})

@@ -14,7 +14,9 @@ class TransactionRowComponent(component.Component):
     <div class="text-lg font-medium {% if transaction.type == transaction.TransactionType.EXPENSE %}text-red-300{% else %}text-blue-300{% endif %} text-nowrap">
     {% if transaction.type == transaction.TransactionType.EXPENSE %}-{% endif %}{{transaction.amount}} €
     </div>
+    {% if transaction.last_amount %}
     <div class="text-sm text-gray-500 font-medium ">{{transaction.last_amount|floatformat:2}} €</div>
+    {% endif %}
     <div class="flex">
     {% if transaction.goal %}
     <div class="text-sm text-gray-500 font-medium ">Objetivo: {{transaction.goal.name|default:"-"}}</div>
