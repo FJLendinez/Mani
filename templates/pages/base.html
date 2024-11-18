@@ -9,6 +9,8 @@
         <script src="{% static 'htmx.min.js' %}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         {% webpush_header %}
+
+        <meta name="service-worker-js" content="{% static 'service-worker.js' %}">
         <link rel="apple-touch-icon" sizes="128x128" href="{% static 'rsz_icon.png' %}">
         <link rel="apple-touch-icon" sizes="240x240" href="{% static 'rsz_1icon.png' %}">
         <link rel="shortcut icon" href="{% static 'rsz_1icon.png' %}">
@@ -19,6 +21,7 @@
             tailwind.config = {}
         </script>
 
+        <script type="text/javascript" src="{% static 'echarts.min.js' %}"></script>
 
         <meta name="htmx-config" content='{"historyCacheSize": 0, "refreshOnHistoryMiss": true}'>
         <style>
@@ -94,6 +97,8 @@
 </div>
 
 {% if not request.htmx %}
+    {% webpush_button with_class="" %}
+
     </body>
     </html>
 {% endif %}

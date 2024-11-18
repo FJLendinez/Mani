@@ -2,7 +2,13 @@ const CACHE_NAME = 'Mani';
 
 /* Add relative URL of all the static content you want to store in
  * cache storage (this will help us use our app offline)*/
-let resourcesToCache = ["/static/rsz_icon.png", "/static/rsz_1icon.png"];
+let resourcesToCache = [
+    "/static/rsz_icon.png",
+    "/static/rsz_1icon.png",
+    "/static/echarts.min.js",
+    "/static/htmx.min.js",
+    "/static/webpush/webpush.js"
+];
 
 self.addEventListener("install", e => {
     e.waitUntil(
@@ -36,4 +42,3 @@ self.addEventListener('activate', event => {
         })
     );
 });
-
