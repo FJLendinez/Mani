@@ -2,8 +2,8 @@
   "name": "Mani",
   "short_name": "Mani",
   "start_url": "/",
-  "background_color": "#EECAD5",
-  "theme_color": "#EECAD5",
+  "background_color": "#C6DEF1",
+  "theme_color": "#C6DEF1",
   "icons": [
     {
       "src": "/static/rsz_1icon.png",
